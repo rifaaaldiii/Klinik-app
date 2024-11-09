@@ -138,7 +138,7 @@
                 </thead>
                 <tbody id="transaksiTableBody">
                     <?php
-                    $query_penggajian = "SELECT p.*, k.nama, k.golongan_id, k.no_rek, g.nama_golongan, g.gaji_pokok
+                    $query_penggajian = "SELECT p.*, k.nama, k.golongan_id, k.no_rek, k.nik, g.nama_golongan, g.gaji_pokok
                     FROM penggajian p 
                     JOIN karyawan k ON p.karyawan_id = k.id
                     JOIN golongan g ON k.golongan_id = g.id
@@ -206,7 +206,7 @@
                                                 </div>
 
                                                 <div class="row">
-                                                    <img src="img/qrcode.png" alt="" style="width: 80%; margin: 10px auto;">
+                                                    <img src="img/qr-code/<?= $penggajian_row['nik'] ?>.png" alt="" style="width: 80%; margin: auto; padding: 0;">
                                                 </div>
 
                                                 <div class="modal-footer">
