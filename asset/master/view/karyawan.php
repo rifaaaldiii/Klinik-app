@@ -58,7 +58,7 @@
                                         <i class="fa fa-pencil"></i>
                                     </button>
 
-                                    <a href="app/karyawan/delete.php?id=<?= $karyawan_row['id'] ?>" class="btn btn-sm btn-danger" style="box-shadow: none;" onclick="return confirmDelete('<?= $karyawan_row['nama'] ?>')">
+                                    <a href="app/karyawan/delete.php?id=<?= $karyawan_row['id'] ?>&nik=<?= $karyawan_row['nik'] ?>" class="btn btn-sm btn-danger" style="box-shadow: none;" onclick="return confirmDelete('<?= $karyawan_row['nama'] ?>')">
                                         <i class="fa fa-trash"></i>
                                     </a>
                                 </td>

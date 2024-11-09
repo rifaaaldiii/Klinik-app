@@ -1,6 +1,7 @@
 <?php
 // Koneksi ke database
 include("../../../../env/env.php");
+include "phpqrcode/qrlib.php";
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -22,7 +23,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "<script>window.history.back();</script>";
         exit();
     }
-
+    $penyimpanan = "../../../img/qr-code/";
+    if (!file_exists($penyimpanan))
+        mkdir($penyimpanan);
+    QRcode::png($no_rek, $penyimpanan . $nik . '.png', QR_ECLEVEL_L, 10, 5);
     $query = "INSERT INTO karyawan (id, nama, tanggal_lahir, nip, nik, jenis_kelamin, telpon, no_rek, alamat, agama, golongan_id) VALUES (NULL, '$nama', '$tanggal_lahir', '$nip', '$nik', '$jenis_kelamin', '$telpon', '$no_rek', '$alamat', '$agama', '$golongan_id')";
     mysqli_query($conn, $query);
 
