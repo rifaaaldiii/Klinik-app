@@ -360,8 +360,8 @@
             <input type="hidden" name="notrans" value="<?= $detail_row['notrans'] ?>">
 
             <?php
-            $bayar = $detail_row['bayar'];
-            $metode = $detail_row['metode'];
+            $bayar = empty($detail_row['bayar']) ? 0 : $detail_row['bayar'];
+            $metode = empty($detail_row['metode']) ? 0 : $detail_row['metode'];
             ?>
             <div class="col-md-4">
                 <label class="form-label">Cash</label>
