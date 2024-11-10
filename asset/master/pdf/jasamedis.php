@@ -28,14 +28,20 @@ if (isset($_GET['dokter'])) {
 
     $pdf->AddPage();
 
-    // Header
+    // Atur opacity terlebih dahulu sebelum menambahkan gambar
+    $pdf->setAlpha(0.3); // Membuat lebih transparan (nilai 0.1 lebih transparan dari 0.2)
+    $pdf->Image('../../../asset/img/logo.jpg', 70, 50, 70, 70, 'JPG', '', 'C', false, 300, '', false, false, 0, false, false, false);
+    $pdf->setAlpha(1); // Kembalikan opacity ke normal untuk teks
+
+    // Header   
+    $pdf->setAlpha(1); // Mengembalikan opacity ke normal untuk teks
     $pdf->SetFont('helvetica', 'B', 14);
-    $pdf->Cell(0, 15, 'PT. Klinik Sejahtera', 0, 1, 'C');
+    $pdf->Cell(0, 10, 'KLINIK GIGI LUV YOUR TEETH', 0, 1, 'C');
     $pdf->SetFont('helvetica', 'B', 10);
-    $pdf->Cell(0, 5, 'Mari Jaga Kesehatan Gigi Anda', 0, 1, 'C');
+    $pdf->Cell(0, 5, 'Making People Smile Is Our Business', 0, 1, 'C');
     $pdf->SetFont('helvetica', '', 10);
-    $pdf->Cell(0, 5, 'JL. Tidak diketahui,Km.100 LA - LS, Input Kode Pos 42263, Telpon: 08123445556,', 0, 1, 'C');
-    $pdf->Cell(0, 5, 'E-Mail: kliniksejahtera@gmail.com', 0, 1, 'C');
+    $pdf->Cell(0, 5, 'Jl. Sayabulu No.2, Kel.Serang, Kec. Serang, Serang-Banten 42116 Indonesia,', 0, 1, 'C');
+    $pdf->Cell(0, 5, 'Telp: 081310680640, E-mail: doktergigilyt@gmail.com', 0, 1, 'C');
     $pdf->Line(10, 45, 200, 45);
     $pdf->Line(10, 46, 200, 46);
 
@@ -112,9 +118,9 @@ if (isset($_GET['dokter'])) {
         $pdf->SetXY($startX + $w[0] + $w[1] + $w[2], $yPos);
 
         // Cetak kolom-kolom nilai
-        $pdf->Cell($w[3], $height, 'Rp. ' . number_format($row['harga']), 1, 0, 'L');
-        $pdf->Cell($w[4], $height, 'Rp. ' . number_format($row['modal']), 1, 0, 'L');
-        $pdf->Cell($w[5], $height, 'Rp. ' . number_format($row['jm']), 1, 0, 'L');
+        $pdf->Cell($w[3], $height, 'Rp. ' . empty($row['harga']) ? '0' : number_format($row['harga']), 1, 0, 'L');
+        $pdf->Cell($w[4], $height, 'Rp. ' . empty($row['modal']) ? '0' : number_format($row['modal']), 1, 0, 'L');
+        $pdf->Cell($w[5], $height, 'Rp. ' . empty($row['jm']) ? '0' : number_format($row['jm']), 1, 0, 'L');
 
         // Cetak catatan dengan MultiCell
         $pdf->MultiCell($w[6], $height, $row['catatan'], 1, 'L');
@@ -137,7 +143,7 @@ if (isset($_GET['dokter'])) {
     // Tampilkan total
     $pdf->SetFont('helvetica', 'B', 10);
     $pdf->Cell(array_sum($w) - 27, 7, 'TOTAL JASA MEDIS', 1, 0, 'C');
-    $pdf->Cell(27, 7, 'Rp. ' . number_format($total), 1, 1, 'L');
+    $pdf->Cell(27, 7, 'Rp. ' . empty($total) ? '0' : number_format($total), 1, 1, 'L');
 
 
     // TTD

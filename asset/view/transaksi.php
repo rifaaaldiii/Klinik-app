@@ -127,8 +127,13 @@
                             <select name="dokter" class="form-select" required>
                                 <option value="">Pilih dokter</option>
 
-                                <?php while ($karyawan = mysqli_fetch_assoc($result_karyawan)) {
-                                    if ($karyawan['golongan_id'] === '2') { ?>
+                                <?php
+                                $query_karyawan = "SELECT k.*, g.nama_golongan
+                                 FROM karyawan k
+                                 JOIN golongan g ON k.golongan_id = g.id
+                                 WHERE g.nama_golongan = 'Dokter'";
+                                $result_karyawan = mysqli_query($conn, $query_karyawan);
+                                while ($karyawan = mysqli_fetch_assoc($result_karyawan)) { { ?>
                                         <option value="<?= $karyawan['id'] ?>"><?= $karyawan['nama'] ?></option>
                                 <?php }
                                 } ?>

@@ -9,13 +9,13 @@
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-  <link rel="icon" href="asset/img/icon1.png" />
+  <link rel="icon" href="asset/img/logo.jpg" />
 </head>
 
 <body>
   <div class="login-container">
     <div class="login-header">
-      <img src="asset/img/icon2.png" alt="Logo KlinikApp" class="logo" />
+      <img src="asset/img/logo.jpg" alt="Logo KlinikApp" class="logo" />
       <h1>Selamat Datang</h1>
       <p>Mari Jaga Kesehatan Gigi Anda Bersama Kami</p>
     </div>

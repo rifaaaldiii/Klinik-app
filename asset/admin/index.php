@@ -31,7 +31,7 @@ if (!isset($_SESSION['username'])) {
 
 
     <link rel="stylesheet" href="css/index.css">
-    <link rel="icon" href="img/icon1.png" />
+    <link rel="icon" href="img/logo.jpg" />
     <title>Klinik XYZ - <?php
                         if (isset($_GET['page'])) {
                             echo ucfirst($_GET['page']);

@@ -6,9 +6,7 @@ session_start();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Validasi field tidak boleh kosong
     if (
-        empty($_POST['nama_golongan']) ||
-        empty($_POST['gaji_pokok']) ||
-        empty($_POST['tunjangan_makan'])
+        empty($_POST['nama_golongan'])
     ) {
 
         echo "<script>alert('Semua field harus diisi!');</script>";
