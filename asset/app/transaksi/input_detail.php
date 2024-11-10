@@ -16,13 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $catatan = $_POST['catatan'];
 
     // Validasi subtotal
-    if ($subtotal == 0) {
-        echo "<script>
-            alert('Subtotal tidak boleh 0 atau kurang dari 0!');
-            window.history.back();
-        </script>";
-        exit();
-    }
 
     // Query untuk memasukkan data ke tabel detail_transaksi
     $query = "INSERT INTO detail_transaksi (id, notrans, tindakan, harga, jm, tipe_jm, modal, total, diskon, dp, catatan) VALUES (NULL, '$notrans', '$nama_td', '$harga', '$harga_jasa', '$tipe', '$modal', '$subtotal', '$diskon', '$dp', '$catatan')";
