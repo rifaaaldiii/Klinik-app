@@ -34,14 +34,20 @@ if (isset($_GET['id'])) {
 
     $pdf->AddPage();
 
-    // Header
+    // Atur opacity terlebih dahulu sebelum menambahkan gambar
+    $pdf->setAlpha(0.3); // Membuat lebih transparan (nilai 0.1 lebih transparan dari 0.2)
+    $pdf->Image('../../../asset/img/logo.jpg', 70, 50, 70, 70, 'JPG', '', 'C', false, 300, '', false, false, 0, false, false, false);
+    $pdf->setAlpha(1); // Kembalikan opacity ke normal untuk teks
+
+    // Header   
+    $pdf->setAlpha(1); // Mengembalikan opacity ke normal untuk teks
     $pdf->SetFont('helvetica', 'B', 14);
-    $pdf->Cell(0, 15, 'PT. Klinik Sejahtera', 0, 1, 'C');
+    $pdf->Cell(0, 10, 'KLINIK GIGI LUV YOUR TEETH', 0, 1, 'C');
     $pdf->SetFont('helvetica', 'B', 10);
-    $pdf->Cell(0, 5, 'Mari Jaga Kesehatan Gigi Anda', 0, 1, 'C');
+    $pdf->Cell(0, 5, 'Making People Smile Is Our Business', 0, 1, 'C');
     $pdf->SetFont('helvetica', '', 10);
-    $pdf->Cell(0, 5, 'JL. Tidak diketahui,Km.100 LA - LS, Input Kode Pos 42263, Telpon: 08123445556,', 0, 1, 'C');
-    $pdf->Cell(0, 5, 'E-Mail: cabut.gigi@gmail.com', 0, 1, 'C');
+    $pdf->Cell(0, 5, 'Jl. Sayabulu No.2, Kel.Serang, Kec. Serang, Serang-Banten 42116 Indonesia,', 0, 1, 'C');
+    $pdf->Cell(0, 5, 'Telp: 081310680640, E-mail: doktergigilyt@gmail.com', 0, 1, 'C');
     $pdf->Line(10, 45, 200, 45);
     $pdf->Line(10, 46, 200, 46);
 
@@ -83,18 +89,18 @@ if (isset($_GET['id'])) {
 
     // Isi Tabel
     $pdf->SetFont('helvetica', '', 10);
-    $pdf->Cell($w[0], 7, 'Rp. ' . number_format($data['gaji_pokok']), 1, 0, 'L');
-    $pdf->Cell($w[1], 7, 'Rp. ' . number_format($data['overtime']), 1, 0, 'L');
-    $pdf->Cell($w[2], 7, 'Rp. ' . number_format($data['jumlah_pasien']), 1, 0, 'L');
-    $pdf->Cell($w[3], 7, 'Rp. ' . number_format($data['makan']), 1, 0, 'L');
-    $pdf->Cell($w[4], 7, 'Rp. ' . number_format($data['ro1']), 1, 0, 'L');
-    $pdf->Cell($w[5], 7, 'Rp. ' . number_format($data['ro2']), 1, 0, 'L');
-    $pdf->Cell($w[6], 7, 'Rp. ' . number_format($data['ro3']), 1, 1, 'L');
+    $pdf->Cell($w[0], 7, 'Rp. ' . empty($data['gaji_pokok']) ? '0' : number_format($data['gaji_pokok']), 1, 0, 'L');
+    $pdf->Cell($w[1], 7, 'Rp. ' . empty($data['overtime']) ? '0' : number_format($data['overtime']), 1, 0, 'L');
+    $pdf->Cell($w[2], 7, 'Rp. ' . empty($data['jumlah_pasien']) ? '0' : number_format($data['jumlah_pasien']), 1, 0, 'L');
+    $pdf->Cell($w[3], 7, 'Rp. ' . empty($data['makan']) ? '0' : number_format($data['makan']), 1, 0, 'L');
+    $pdf->Cell($w[4], 7, 'Rp. ' . empty($data['ro1']) ? '0' : number_format($data['ro1']), 1, 0, 'L');
+    $pdf->Cell($w[5], 7, 'Rp. ' . empty($data['ro2']) ? '0' : number_format($data['ro2']), 1, 0, 'L');
+    $pdf->Cell($w[6], 7, 'Rp. ' . empty($data['ro3']) ? '0' : number_format($data['ro3']), 1, 1, 'L');
 
     // Grand Total di baris baru
     $pdf->SetFont('helvetica', 'B', 10);
     $pdf->Cell(array_sum($w) - 48, 7, 'GRAND TOTAL', 1, 0, 'C');
-    $pdf->Cell(48, 7, 'Rp. ' . number_format($data['total']), 1, 1, 'R');
+    $pdf->Cell(48, 7, 'Rp. ' . empty($data['total']) ? '0' : number_format($data['total']), 1, 1, 'R');
 
 
     // TTD
