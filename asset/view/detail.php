@@ -136,7 +136,9 @@
                                     name="catatan"
                                     class="form-control"
                                     placeholder="Masukan Keterangan..."
-                                    style="height: 70px;"></textarea>
+                                    style="height: 70px;"
+                                    id="catatan">
+                                </textarea>
                             </div>
                         </div>
 
@@ -432,7 +434,7 @@
         document.getElementById('totalharga').value = 0;
         document.getElementById('namatd').value = '';
         document.getElementById('hargaTambahan').value = 0; // Reset harga tambahan
-        document.getElementById('kali').value = 1; // Reset kali
+        document.getElementById('kali').value = 0; // Reset kali
         document.getElementById('jumlah').value = 0; // Reset jumlah
         document.getElementById('modal').value = 0; // Reset modal
         document.getElementById('diskon').value = 0; // Reset diskon
@@ -479,29 +481,27 @@
         const jasamedis = document.getElementById('jm').value;
         const diskon = document.getElementById('diskon').value;
         const dp = document.getElementById('dp').value;
+        const totalSetelahDP = dp > 0 ? dp : totalharga;
 
         document.getElementById('totalharga').value = totalharga;
-        const totalDp = totalharga - dp;
-        document.getElementById('sisa_dp').value = totalDp;
-        const subtotal = totalDp - (diskon / 100 * totalDp);
-        const sisa_dp = totalharga - subtotal;
-        document.getElementById('subtotal').value = sisa_dp === 0 ? subtotal : sisa_dp;
-
+        document.getElementById('subtotal').value = totalSetelahDP - (diskon / 100 * totalSetelahDP);
 
         if (jasamedis == 0) {
-            jasaharga.value = totalDp * 0.5;
+            jasaharga.value = totalSetelahDP * 0.5;
         } else if (jasamedis == 1) {
             jasaharga.value = 0;
         } else if (jasamedis == 2) {
             jasaharga.value = 20000 * (1 + parseInt(kali));
         } else if (jasamedis == 3) {
-            jasaharga.value = totalDp * 0.65;
+            jasaharga.value = totalSetelahDP * 0.65;
         } else if (jasamedis == 4) {
-            // Jika ada totalDp, gunakan rumus: (totalharga - totalDp - modal) * 0.5
-            // Jika tidak ada totalDp, gunakan rumus: (totalharga - modal) * 0.5
-            jasaharga.value = dp > 0 ?
-                ((totalharga - totalDp - modal) * 0.5) :
-                ((totalharga - modal) * 0.5);
+            jasaharga.value = (totalSetelahDP - modal) * 0.5;
+        }
+
+        if (dp > 0) {
+            document.getElementById('catatan').value = 'Sisa Pembayaran Tindakan Rp. ' + (totalharga - dp);
+        } else {
+            document.getElementById('catatan').value = '';
         }
     }
 </script>
