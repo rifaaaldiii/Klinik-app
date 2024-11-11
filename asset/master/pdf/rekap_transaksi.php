@@ -13,6 +13,10 @@ if (isset($_GET['bulan'])) {
         JOIN karyawan k ON t.dokter = k.id
         WHERE DATE_FORMAT(t.tanggal, '%Y-%m') = '$bulan'
         AND t.status = 'off'");
+    if (mysqli_num_rows($query) == 0) {
+        echo "<script>alert('Data tidak ditemukan'); window.history.back();</script>";
+        exit;
+    }
 
 
     // Buat objek PDF
@@ -70,7 +74,7 @@ if (isset($_GET['bulan'])) {
         $pdf->Cell($w[2], 7, $row['tanggal'], 1, 0, 'C');
         $pdf->Cell($w[3], 7, $row['nama'], 1, 0, 'C');
         $pdf->Cell($w[4], 7, $row['nama_klien'], 1, 0, 'C');
-        $pdf->Cell($w[5], 7, 'Rp. ' . empty($row['total']) ? '0' : number_format($row['total']), 1, 0, 'L');
+        $pdf->Cell($w[5], 7, 'Rp. ' . number_format($row['total']), 1, 0, 'L');
         $pdf->Ln(7);
     }
 
@@ -87,7 +91,7 @@ if (isset($_GET['bulan'])) {
     $pdf->SetFont('helvetica', 'B', 10);
     // Tampilkan total
     $pdf->Cell(array_sum($w) - 37, 7, 'GRAND TOTAL', 1, 0, 'C');
-    $pdf->Cell(37, 7, 'Rp. ' . empty($total) ? '0' : number_format($total), 1, 1, 'L');
+    $pdf->Cell(37, 7, 'Rp. ' . number_format($total), 1, 1, 'L');
     $pdf->Ln(18);
 
 

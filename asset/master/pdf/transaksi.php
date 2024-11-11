@@ -96,9 +96,9 @@ if (isset($_GET['notrans'])) {
         $height = $pdf->GetY() - $yPos;
         $pdf->SetXY($xPos + $w[0], $yPos);
 
-        $pdf->Cell($w[1], $height, 'Rp. ' . empty($row['harga']) ? '0' : number_format($row['harga']), 1, 0, 'L');
+        $pdf->Cell($w[1], $height, 'Rp. ' . number_format($row['harga']), 1, 0, 'L');
         $pdf->Cell($w[2], $height,  $row['diskon'] . '%', 1, 0, 'R');
-        $pdf->Cell($w[3], $height, 'Rp. ' . empty($row['total']) ? '0' : number_format($row['total']), 1, 0, 'L');
+        $pdf->Cell($w[3], $height, 'Rp. ' . number_format($row['total']), 1, 0, 'L');
         $pdf->Ln($height);
     }
 
@@ -115,7 +115,7 @@ if (isset($_GET['notrans'])) {
     // Tampilkan total
     $pdf->SetFont('helvetica', 'B', 10);
     $pdf->Cell(array_sum($w) - 45, 7, 'GRAND TOTAL', 1, 0, 'C');
-    $pdf->Cell(45, 7, 'Rp. ' . empty($total) ? '0' : number_format($total), 1, 1, 'L');
+    $pdf->Cell(45, 7, 'Rp. ' . number_format($total), 1, 1, 'L');
 
     // TTD
     $pdf->Ln(18);
