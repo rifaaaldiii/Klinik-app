@@ -30,6 +30,7 @@
                     <th>Jasa Medis</th>
                     <th>Modal</th>
                     <th>Diskon</th>
+                    <th>DP</th>
                     <th>Total</th>
                 </tr>
             </thead>
@@ -52,6 +53,7 @@
                         <td>Rp. <?= number_format($detail_row['jm'], 0, ',', '.') ?></td>
                         <td>Rp. <?= number_format($detail_row['modal'], 0, ',', '.') ?></td>
                         <td><?= $detail_row['diskon'] ?>%</td>
+                        <td>Rp. <?= number_format($detail_row['dp'], 0, ',', '.') ?></td>
                         <td>Rp. <?= number_format($detail_row['total'], 0, ',', '.') ?></td>
                     </tr>
                 <?php } ?>
