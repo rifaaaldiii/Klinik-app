@@ -96,17 +96,17 @@
                         </div>
 
                         <div class="col-md-4 mt-3">
-                            <label class="form-label">Modal</label>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text" id="basic-addon1">Rp.</span>
-                                <input type="number" name="modal" id="modal" value="0" min="0" class="form-control" oninput="hitungJumlah()">
+                            <label class="form-label">Diskon</label>
+                            <div class="input-group mb-6">
+                                <input type="number" name="diskon" id="diskon" value="0" min="0" class="form-control" oninput="hitungJumlah()">
+                                <span class="input-group-text" id="basic-addon1">%</span>
                             </div>
                         </div>
 
                         <div class="col-md-4 mt-3">
-                            <label class="form-label">Diskon</label>
+                            <label class="form-label">Diskon JM</label>
                             <div class="input-group mb-6">
-                                <input type="number" name="diskon" id="diskon" value="0" min="0" class="form-control" oninput="hitungJumlah()">
+                                <input type="number" name="diskon_jm" id="diskon_jm" value="0" min="0" max="50" class="form-control" oninput="hitungJumlah()">
                                 <span class="input-group-text" id="basic-addon1">%</span>
                             </div>
                         </div>
@@ -120,6 +120,14 @@
                         </div>
 
                         <div class="col-md-4 mt-3">
+                            <label class="form-label">Modal</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">Rp.</span>
+                                <input type="number" name="modal" id="modal" value="0" min="0" class="form-control" oninput="hitungJumlah()">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mt-3">
                             <label class="form-label">DP</label>
                             <div class="input-group mb-6">
                                 <span class="input-group-text" id="basic-addon1">Rp.</span>
@@ -128,6 +136,7 @@
                         </div>
 
                         <input type="hidden" name="sisa_dp" id="sisa_dp" value="0" min="0" class="form-control" oninput="hitungJumlah()" readonly>
+                        <input type="hidden" name="sisa_jm" id="sisa_jm" value="0" min="0" class="form-control" oninput="hitungJumlah()" readonly>
 
                         <div class="col-md-8 mt-3">
                             <label class="form-label">Keterangan</label>
@@ -268,7 +277,10 @@
                             <select name="id_karyawan" id="id_karyawan" class="form-control" required>
                                 <option value="">Pilih Asistens</option>
                                 <?php
-                                $query_karyawan = "SELECT * FROM karyawan WHERE golongan_id = '1'";
+                                $query_karyawan = "SELECT k.*, g.nama_golongan
+                                 FROM karyawan k
+                                 JOIN golongan g ON k.golongan_id = g.id
+                                WHERE g.nama_golongan != 'Dokter'";
                                 $result_karyawan = mysqli_query($conn, $query_karyawan);
                                 while ($karyawan = mysqli_fetch_assoc($result_karyawan)) { ?>
                                     <option value="<?= $karyawan['id'] ?>"><?= $karyawan['nama'] ?></option>
@@ -503,5 +515,27 @@
         } else {
             document.getElementById('catatan').value = '';
         }
+
+        const diskon_jm = parseFloat(document.getElementById('diskon_jm').value) || 0;
+
+        // Pastikan jasaharga dan subtotal adalah angka
+        let jasahargaValue = parseFloat(jasaharga.value) || 0;
+        let subtotalValue = parseFloat(document.getElementById('subtotal').value) || 0;
+
+        // Tambahkan logika untuk menghitung jasaharga berdasarkan diskon_jm
+        if (diskon_jm > 0) {
+            jasahargaValue *= (1 - ((diskon_jm * 2) / 100));
+            const sisa_dp = document.getElementById('sisa_dp').value = jasahargaValue;
+            const sisa_jm = document.getElementById('sisa_jm').value = jasaharga.value;
+            subtotalValue = subtotalValue - (sisa_jm - sisa_dp);
+        }
+
+        // Simpan nilai numerik untuk perhitungan lebih lanjut jika diperlukan
+        const jasahargaNumeric = Math.floor(jasahargaValue); // Menghilangkan nilai di belakang koma
+        const subtotalNumeric = Math.floor(subtotalValue); // Menghilangkan nilai di belakang koma
+
+        // Update nilai jasaharga dan subtotal dengan format IDR untuk tampilan
+        jasaharga.value = jasahargaNumeric;
+        document.getElementById('subtotal').value = subtotalNumeric;
     }
 </script>

@@ -97,7 +97,7 @@ if (isset($_GET['notrans'])) {
         $pdf->SetXY($xPos + $w[0], $yPos);
 
         $pdf->Cell($w[1], $height, 'Rp. ' . number_format($row['harga']), 1, 0, 'L');
-        $pdf->Cell($w[2], $height,  $row['diskon'] . '%', 1, 0, 'R');
+        $pdf->Cell($w[2], $height, empty($row['diskon']) ? '0%' : $row['diskon'] . '%', 1, 0, 'R');
         $pdf->Cell($w[3], $height, 'Rp. ' . number_format($row['total']), 1, 0, 'L');
         $pdf->Ln($height);
     }

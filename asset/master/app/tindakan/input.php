@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $harga = $_POST['harga'];
 
     // Validasi jika ada data yang kosong
-    if (empty($nama_tindakan) || empty($harga)) {
+    if (empty($nama_tindakan)) {
         echo "<script>alert('Semua field harus diisi');</script>";
         echo "<script>window.history.back();</script>";
         exit();

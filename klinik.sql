@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 09, 2024 at 03:19 AM
+-- Generation Time: Nov 11, 2024 at 03:34 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -102,8 +102,8 @@ CREATE TABLE `golongan` (
 
 INSERT INTO `golongan` (`id`, `nama_golongan`, `gaji_pokok`, `tunjangan_makan`, `overtime`, `tunjangan_pasien`, `ro1`, `ro2`, `ro3`) VALUES
 (1, 'Karyawan', 1950000, 17500, '550', '4000', '7500', '15000', '30000'),
-(2, 'Dokter', 0, 0, '0', '0', '0', '0', '0'),
-(6, 'admin', 3324, 34234, '34242', '', '', '', '');
+(7, 'Dokter', 0, 0, '', '', '', '', ''),
+(9, 'Admin', 1, 1, '1', '1', '1', '1', '1');
 
 -- --------------------------------------------------------
 
@@ -131,11 +131,9 @@ CREATE TABLE `karyawan` (
 --
 
 INSERT INTO `karyawan` (`id`, `nip`, `nik`, `nama`, `jenis_kelamin`, `tanggal_lahir`, `telpon`, `no_rek`, `agama`, `alamat`, `golongan_id`, `status`) VALUES
-(10, '23443', '4554', 'Rifaldi Yuda', 'Laki-laki', '2024-11-09', '07867867', '436464364', 'Islam', 'sadsads', 2, ''),
-(11, '34232432', '23442334234', 'Azi Rama T', 'Laki-laki', '2024-11-09', '4354354', '5434534', 'Islam', '35345', 2, ''),
-(12, '5453643', '4364363464', 'Messy Marlina', 'Perempuan', '2024-11-06', '34435345', '4543543453', 'Islam', '', 1, 'on'),
-(13, '4354354', '43543543', 'Geraldine', 'Perempuan', '2024-11-06', '07867867', '23432234', 'Islam', 'ewrerwerwe', 1, 'on'),
-(19, '32425', '32523523', 'regerg', 'Laki-laki', '2024-11-08', '44354', '454334', 'Islam', 'pdg', 6, 'on');
+(26, '234324', '32432423', 'Rifaldi', 'Laki-laki', '2024-11-11', '083432423', '23438249324', 'Islam', 'PDG', 7, ''),
+(27, '34324', '34324', 'Messy', 'Perempuan', '2024-11-11', '04353453', '21321', 'Islam', 'LBK', 9, 'on'),
+(28, '324324', '3423423', 'Azi', 'Laki-laki', '2024-11-11', '345534543', '3242352', 'Islam', 'PDG', 1, 'on');
 
 -- --------------------------------------------------------
 
@@ -374,49 +372,49 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `asistens`
 --
 ALTER TABLE `asistens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `detail_gaji`
 --
 ALTER TABLE `detail_gaji`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `detail_transaksi`
 --
 ALTER TABLE `detail_transaksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=178;
 
 --
 -- AUTO_INCREMENT for table `golongan`
 --
 ALTER TABLE `golongan`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `karyawan`
 --
 ALTER TABLE `karyawan`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `penggajian`
 --
 ALTER TABLE `penggajian`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT for table `tindakan`
 --
 ALTER TABLE `tindakan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200;
 
 --
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=170;
 
 --
 -- AUTO_INCREMENT for table `user`

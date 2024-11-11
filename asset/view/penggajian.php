@@ -264,8 +264,9 @@
                                 <select name="karyawan" class="form-control" required onchange="updateKaryawanId()">
                                     <option value="" disabled selected>Pilih karyawan...</option>
                                     <?php
-                                    $query_karyawan = "SELECT k.* 
+                                    $query_karyawan = "SELECT k.*, g.nama_golongan
                                                        FROM karyawan k 
+                                                       JOIN golongan g ON k.golongan_id = g.id
                                                        WHERE NOT EXISTS (
                                                            SELECT 1 
                                                            FROM penggajian p 
@@ -273,7 +274,7 @@
                                                            AND MONTH(p.tanggal) = MONTH(CURRENT_DATE())
                                                            AND YEAR(p.tanggal) = YEAR(CURRENT_DATE())
                                                        )
-                                                       AND k.golongan_id = 1";
+                                                       AND g.nama_golongan != 'Dokter'";
                                     $result_karyawan = mysqli_query($conn, $query_karyawan);
                                     while ($karyawan = mysqli_fetch_assoc($result_karyawan)) { ?>
                                         <option value="<?= $karyawan['id'] ?>" data-id="<?= $karyawan['id'] ?>"><?= $karyawan['nama'] ?></option>
