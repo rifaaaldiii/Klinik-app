@@ -118,9 +118,9 @@ if (isset($_GET['dokter'])) {
         $pdf->SetXY($startX + $w[0] + $w[1] + $w[2], $yPos);
 
         // Cetak kolom-kolom nilai
-        $pdf->Cell($w[3], $height, 'Rp. ' . empty($row['harga']) ? '0' : number_format($row['harga']), 1, 0, 'L');
-        $pdf->Cell($w[4], $height, 'Rp. ' . empty($row['modal']) ? '0' : number_format($row['modal']), 1, 0, 'L');
-        $pdf->Cell($w[5], $height, 'Rp. ' . empty($row['jm']) ? '0' : number_format($row['jm']), 1, 0, 'L');
+        $pdf->Cell($w[3], $height, 'Rp. ' . number_format($row['harga']), 1, 0, 'L');
+        $pdf->Cell($w[4], $height, 'Rp. ' . number_format($row['modal']), 1, 0, 'L');
+        $pdf->Cell($w[5], $height, 'Rp. ' . number_format($row['jm']), 1, 0, 'L');
 
         // Cetak catatan dengan MultiCell
         $pdf->MultiCell($w[6], $height, $row['catatan'], 1, 'L');
@@ -143,7 +143,7 @@ if (isset($_GET['dokter'])) {
     // Tampilkan total
     $pdf->SetFont('helvetica', 'B', 10);
     $pdf->Cell(array_sum($w) - 27, 7, 'TOTAL JASA MEDIS', 1, 0, 'C');
-    $pdf->Cell(27, 7, 'Rp. ' . empty($total) ? '0' : number_format($total), 1, 1, 'L');
+    $pdf->Cell(27, 7, 'Rp. ' . number_format($total), 1, 1, 'L');
 
 
     // TTD

@@ -89,18 +89,18 @@ if (isset($_GET['id'])) {
 
     // Isi Tabel
     $pdf->SetFont('helvetica', '', 10);
-    $pdf->Cell($w[0], 7, 'Rp. ' . empty($data['gaji_pokok']) ? '0' : number_format($data['gaji_pokok']), 1, 0, 'L');
-    $pdf->Cell($w[1], 7, 'Rp. ' . empty($data['overtime']) ? '0' : number_format($data['overtime']), 1, 0, 'L');
-    $pdf->Cell($w[2], 7, 'Rp. ' . empty($data['jumlah_pasien']) ? '0' : number_format($data['jumlah_pasien']), 1, 0, 'L');
-    $pdf->Cell($w[3], 7, 'Rp. ' . empty($data['makan']) ? '0' : number_format($data['makan']), 1, 0, 'L');
-    $pdf->Cell($w[4], 7, 'Rp. ' . empty($data['ro1']) ? '0' : number_format($data['ro1']), 1, 0, 'L');
-    $pdf->Cell($w[5], 7, 'Rp. ' . empty($data['ro2']) ? '0' : number_format($data['ro2']), 1, 0, 'L');
-    $pdf->Cell($w[6], 7, 'Rp. ' . empty($data['ro3']) ? '0' : number_format($data['ro3']), 1, 1, 'L');
+    $pdf->Cell($w[0], 7, 'Rp. ' . number_format($data['gaji_pokok']), 1, 0, 'L');
+    $pdf->Cell($w[1], 7, 'Rp. ' . number_format($data['overtime']), 1, 0, 'L');
+    $pdf->Cell($w[2], 7, 'Rp. ' . number_format($data['jumlah_pasien']), 1, 0, 'L');
+    $pdf->Cell($w[3], 7, 'Rp. ' . number_format($data['makan']), 1, 0, 'L');
+    $pdf->Cell($w[4], 7, 'Rp. ' . number_format($data['ro1']), 1, 0, 'L');
+    $pdf->Cell($w[5], 7, 'Rp. ' . number_format($data['ro2']), 1, 0, 'L');
+    $pdf->Cell($w[6], 7, 'Rp. ' . number_format($data['ro3']), 1, 1, 'L');
 
     // Grand Total di baris baru
     $pdf->SetFont('helvetica', 'B', 10);
     $pdf->Cell(array_sum($w) - 48, 7, 'GRAND TOTAL', 1, 0, 'C');
-    $pdf->Cell(48, 7, 'Rp. ' . empty($data['total']) ? '0' : number_format($data['total']), 1, 1, 'R');
+    $pdf->Cell(48, 7, 'Rp. ' . number_format($data['total']), 1, 1, 'R');
 
 
     // TTD

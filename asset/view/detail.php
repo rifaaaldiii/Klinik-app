@@ -96,17 +96,17 @@
                         </div>
 
                         <div class="col-md-4 mt-3">
-                            <label class="form-label">Modal</label>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text" id="basic-addon1">Rp.</span>
-                                <input type="number" name="modal" id="modal" value="0" min="0" class="form-control" oninput="hitungJumlah()">
+                            <label class="form-label">Diskon</label>
+                            <div class="input-group mb-6">
+                                <input type="number" name="diskon" id="diskon" value="0" min="0" class="form-control" oninput="hitungJumlah()">
+                                <span class="input-group-text" id="basic-addon1">%</span>
                             </div>
                         </div>
 
                         <div class="col-md-4 mt-3">
-                            <label class="form-label">Diskon</label>
+                            <label class="form-label">Diskon JM</label>
                             <div class="input-group mb-6">
-                                <input type="number" name="diskon" id="diskon" value="0" min="0" class="form-control" oninput="hitungJumlah()">
+                                <input type="number" name="diskon_jm" id="diskon_jm" value="0" min="0" class="form-control" oninput="hitungJumlah()">
                                 <span class="input-group-text" id="basic-addon1">%</span>
                             </div>
                         </div>
@@ -116,6 +116,14 @@
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1">Rp.</span>
                                 <input type="number" name="harga_jasa" id="jasaharga" value="0" class="form-control" required readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mt-3">
+                            <label class="form-label">Modal</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">Rp.</span>
+                                <input type="number" name="modal" id="modal" value="0" min="0" class="form-control" oninput="hitungJumlah()">
                             </div>
                         </div>
 
@@ -502,6 +510,14 @@
             document.getElementById('catatan').value = 'Sisa Pembayaran Tindakan Rp. ' + (totalharga - dp);
         } else {
             document.getElementById('catatan').value = '';
+        }
+
+        const diskon_jm = document.getElementById('diskon_jm').value;
+
+        // Tambahkan logika untuk menghitung jasaharga berdasarkan diskon_jm
+        if (diskon_jm > 0) {
+            jasaharga.value = jasaharga.value * (1 - (diskon_jm / 100));
+            document.getElementById('subtotal').value = document.getElementById('subtotal').value * (1 - (diskon_jm / 100));
         }
     }
 </script>

@@ -86,8 +86,11 @@
                                 <div class="input-group-text ms-2 me-2">
                                     =
                                 </div>
-                                <div class="col-md-5">
-                                    <input type="number" name="jumlah" class="form-control" readonly id="jumlah">
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1">Rp.</span>
+                                        <input type="number" name="jumlah" class="form-control" readonly id="jumlah">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -124,14 +127,18 @@
                             </div>
                         </div>
 
+                        <input type="hidden" name="sisa_dp" id="sisa_dp" value="0" min="0" class="form-control" oninput="hitungJumlah()" readonly>
+
                         <div class="col-md-8 mt-3">
                             <label class="form-label">Keterangan</label>
-                            <div class="input-group mb-6">
+                            <div class="input-group mb-3">
                                 <textarea
                                     name="catatan"
                                     class="form-control"
                                     placeholder="Masukan Keterangan..."
-                                    style="height: 70px;"></textarea>
+                                    style="height: 70px;"
+                                    id="catatan">
+                                </textarea>
                             </div>
                         </div>
 
@@ -352,19 +359,23 @@
             ?>
             <input type="hidden" name="notrans" value="<?= $detail_row['notrans'] ?>">
 
-
+            <?php
+            $bayar = empty($detail_row['bayar']) ? 0 : $detail_row['bayar'];
+            $metode = empty($detail_row['metode']) ? 0 : $detail_row['metode'];
+            ?>
             <div class="col-md-4">
                 <label class="form-label">Cash</label>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1">Rp.</span>
-                    <input type="number" name="cash" id="cash" value="0" min="0" class="form-control" required>
+                    <input type="number" name="cash" id="cash" value="<?= $metode == 'cash' ? $bayar : 0 ?>" min="0" class="form-control" required>
                 </div>
             </div>
+
             <div class="col-md-4">
                 <label class="form-label">Transfer</label>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1">Rp.</span>
-                    <input type="number" name="transfer" id="transfer" value="0" min="0" class="form-control" required>
+                    <input type="number" name="transfer" id="transfer" value="<?= $metode == 'transfer' ? $bayar : 0 ?>" min="0" class="form-control" required>
                 </div>
             </div>
 
@@ -428,7 +439,7 @@
         document.getElementById('modal').value = 0; // Reset modal
         document.getElementById('diskon').value = 0; // Reset diskon
         document.getElementById('dp').value = 0; // Reset dp
-
+        document.getElementById('sisa_dp').value = 0; // Reset sisa dp
         if (selectedOption) {
             // Tambahkan pengecekan untuk harga
             if (harga == 0) {
@@ -460,7 +471,7 @@
         const jumlah = hargaTambahan * kali;
 
         document.getElementById('jumlah').value = jumlah;
-        document.getElementById('kali').value = 1;
+        document.getElementById('kali').value;
 
         // Hitung totalharga
         const hargaJasa = document.getElementById('hargaJasa').value;
@@ -470,21 +481,27 @@
         const jasamedis = document.getElementById('jm').value;
         const diskon = document.getElementById('diskon').value;
         const dp = document.getElementById('dp').value;
+        const totalSetelahDP = dp > 0 ? dp : totalharga;
 
         document.getElementById('totalharga').value = totalharga;
-        const totalDp = totalharga - dp;
-        document.getElementById('subtotal').value = totalharga - modal - (diskon / 100 * totalharga);
+        document.getElementById('subtotal').value = totalSetelahDP - (diskon / 100 * totalSetelahDP);
 
         if (jasamedis == 0) {
-            jasaharga.value = totalDp * 0.5;
+            jasaharga.value = totalSetelahDP * 0.5;
         } else if (jasamedis == 1) {
             jasaharga.value = 0;
         } else if (jasamedis == 2) {
             jasaharga.value = 20000 * (1 + parseInt(kali));
         } else if (jasamedis == 3) {
-            jasaharga.value = totalDp * 0.65;
+            jasaharga.value = totalSetelahDP * 0.65;
         } else if (jasamedis == 4) {
-            jasaharga.value = (totalDp - modal) * 0.5;
+            jasaharga.value = (totalSetelahDP - modal) * 0.5;
+        }
+
+        if (dp > 0) {
+            document.getElementById('catatan').value = 'Sisa Pembayaran Tindakan Rp. ' + (totalharga - dp);
+        } else {
+            document.getElementById('catatan').value = '';
         }
     }
 </script>
