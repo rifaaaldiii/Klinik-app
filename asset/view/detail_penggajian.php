@@ -232,7 +232,7 @@ if ($result_karyawan && mysqli_num_rows($result_karyawan) > 0) {
                             <td>Rp. <?= empty($bonus) ? '0' : number_format($bonus, 0, ',', '.') ?></td>
                             <td>Rp. <?= empty($total) ? '0' : number_format($total, 0, ',', '.') ?></td>
                             <td>
-                                <a href="app/penggajian/delete.php?id=<?= $row_dg['id'] ?>&karyawan_id=<?= $id ?>" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                <a href="app/penggajian/delete.php?id=<?= $row_dg['id'] ?>&karyawan_id=<?= $id ?>&penggajian_id=<?= $sid ?>" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>

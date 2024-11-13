@@ -64,8 +64,8 @@ if (isset($_GET['dokter'])) {
 
     // Tabel
     $pdf->SetFont('helvetica', 'B', 10);
-    $header = array('No. Trans', 'Tanggal', 'Tindakan', 'Harga', 'Modal', 'Jasa Medis', 'Catatan');
-    $w = array(21, 21, 50, 23, 22, 23, 27);
+    $header = array('Tanggal', 'Nama Klien', 'Tindakan', 'Harga', 'Modal', 'Jasa Medis', 'Dis JM', 'Catatan');
+    $w = array(18, 21, 40, 22, 22, 22, 15, 30);
 
     // Header Tabel
     for ($i = 0; $i < count($header); $i++) {
@@ -80,8 +80,11 @@ if (isset($_GET['dokter'])) {
         dt.jm,
         dt.modal,
         dt.catatan,
+        dt.diskon_jm,
         t.notrans,
-        t.tanggal
+        t.tanggal,
+        t.nama_klien
+
         FROM detail_transaksi dt 
         JOIN transaksi t ON dt.notrans = t.notrans
         WHERE t.dokter = '$dokter'");
@@ -93,37 +96,45 @@ if (isset($_GET['dokter'])) {
         // Simpan posisi awal
         $startX = $xPos;
 
+        // Hitung tinggi yang dibutuhkan untuk nama klien
+        $pdf->SetXY($xPos + $w[0], $yPos);
+        $pdf->MultiCell($w[1], 7, $row['nama_klien'], 0, 'L');
+        $namaKlienHeight = $pdf->GetY() - $yPos;
+
         // Hitung tinggi yang dibutuhkan untuk tindakan
-        $pdf->SetXY($xPos + $w[0] + $w[1], $yPos);
+        $pdf->SetXY($xPos + array_sum(array_slice($w, 0, 2)), $yPos);
         $pdf->MultiCell($w[2], 7, $row['tindakan'], 0, 'L');
         $tindakanHeight = $pdf->GetY() - $yPos;
 
         // Hitung tinggi yang dibutuhkan untuk catatan
-        $pdf->SetXY($xPos + $w[0] + $w[1] + $w[2] + $w[3] + $w[4] + $w[5], $yPos);
-        $pdf->MultiCell($w[6], 7, $row['catatan'], 0, 'L');
+        $pdf->SetXY($xPos + array_sum(array_slice($w, 0, 7)), $yPos);
+        $pdf->MultiCell($w[7], 7, $row['catatan'], 0, 'L');
         $catatanHeight = $pdf->GetY() - $yPos;
 
         // Gunakan tinggi yang paling besar
-        $height = max($tindakanHeight, $catatanHeight, 7);
+        $height = max($namaKlienHeight, $tindakanHeight, $catatanHeight, 7);
 
         // Kembali ke posisi awal
         $pdf->SetXY($startX, $yPos);
 
         // Cetak semua kolom dengan tinggi yang sama
-        $pdf->Cell($w[0], $height, $row['notrans'], 1, 0, 'C');
-        $pdf->Cell($w[1], $height, date('d/m/Y', strtotime($row['tanggal'])), 1, 0, 'C');
+        $pdf->Cell($w[0], $height, date('d/m/Y', strtotime($row['tanggal'])), 1, 0, 'C');
+
+        // Cetak nama klien dengan MultiCell
+        $pdf->MultiCell($w[1], $height, $row['nama_klien'], 1, 'L');
+        $pdf->SetXY($startX + array_sum(array_slice($w, 0, 2)), $yPos);
 
         // Cetak tindakan dengan MultiCell
         $pdf->MultiCell($w[2], $height, $row['tindakan'], 1, 'L');
-        $pdf->SetXY($startX + $w[0] + $w[1] + $w[2], $yPos);
+        $pdf->SetXY($startX + array_sum(array_slice($w, 0, 3)), $yPos);
 
         // Cetak kolom-kolom nilai
         $pdf->Cell($w[3], $height, 'Rp. ' . number_format($row['harga']), 1, 0, 'L');
         $pdf->Cell($w[4], $height, 'Rp. ' . number_format($row['modal']), 1, 0, 'L');
         $pdf->Cell($w[5], $height, 'Rp. ' . number_format($row['jm']), 1, 0, 'L');
-
+        $pdf->Cell($w[6], $height, empty($row['diskon_jm']) ? '0%' : $row['diskon_jm'] . '%', 1, 0, 'R');
         // Cetak catatan dengan MultiCell
-        $pdf->MultiCell($w[6], $height, $row['catatan'], 1, 'L');
+        $pdf->MultiCell($w[7], $height, $row['catatan'], 1, 'L');
 
         // Pindah ke baris berikutnya
         $pdf->SetY($yPos + $height);
@@ -142,8 +153,8 @@ if (isset($_GET['dokter'])) {
 
     // Tampilkan total
     $pdf->SetFont('helvetica', 'B', 10);
-    $pdf->Cell(array_sum($w) - 27, 7, 'TOTAL JASA MEDIS', 1, 0, 'C');
-    $pdf->Cell(27, 7, 'Rp. ' . number_format($total), 1, 1, 'L');
+    $pdf->Cell(array_sum($w) - 30, 7, 'TOTAL JASA MEDIS', 1, 0, 'C');
+    $pdf->Cell(30, 7, 'Rp. ' . number_format($total), 1, 1, 'L');
 
 
     // TTD

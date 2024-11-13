@@ -8,7 +8,8 @@ if (isset($_GET['notrans'])) {
     // Ambil data transaksi
     $query = mysqli_query($conn, "SELECT 
         t.*,
-        k.nama
+        k.nama,
+        dt.catatan
         FROM transaksi t
         JOIN karyawan k ON t.dokter = k.id
         JOIN detail_transaksi dt ON t.notrans = dt.notrans
@@ -69,8 +70,8 @@ if (isset($_GET['notrans'])) {
 
     // Tabel
     $pdf->SetFont('helvetica', 'B', 10);
-    $header = array('Tindakan', 'Harga', 'Diskon', 'Total');
-    $w = array(55, 45, 45, 45);
+    $header = array('Tindakan', 'Harga', 'Diskon', 'Diskon JM', 'Catatan', 'Total');
+    $w = array(55, 27, 27, 27, 27, 27);
 
     // Header Tabel
     for ($i = 0; $i < count($header); $i++) {
@@ -84,7 +85,9 @@ if (isset($_GET['notrans'])) {
         dt.tindakan,
         dt.harga,
         dt.diskon,
-        dt.total
+        dt.diskon_jm,
+        dt.total,
+        dt.catatan
         FROM detail_transaksi dt 
         WHERE dt.notrans = '$notrans'");
 
@@ -92,14 +95,44 @@ if (isset($_GET['notrans'])) {
         $xPos = $pdf->GetX();
         $yPos = $pdf->GetY();
 
-        $pdf->MultiCell($w[0], 7, $row['tindakan'], 1, 'L');
-        $height = $pdf->GetY() - $yPos;
-        $pdf->SetXY($xPos + $w[0], $yPos);
+        // Simpan posisi awal
+        $startX = $xPos;
 
+        // Hitung tinggi yang dibutuhkan untuk tindakan
+        $pdf->SetXY($xPos, $yPos);
+        $pdf->MultiCell($w[0], 7, $row['tindakan'], 0, 'L');
+        $tindakanHeight = $pdf->GetY() - $yPos;
+
+        // Hitung tinggi yang dibutuhkan untuk catatan
+        $pdf->SetXY($xPos + $w[0] + $w[1] + $w[2] + $w[3], $yPos);
+        $pdf->MultiCell($w[4], 7, $row['catatan'], 0, 'L');
+        $catatanHeight = $pdf->GetY() - $yPos;
+
+        // Gunakan tinggi yang paling besar
+        $height = max($tindakanHeight, $catatanHeight, 7);
+
+        // Kembali ke posisi awal
+        $pdf->SetXY($startX, $yPos);
+
+        // Cetak tindakan dengan MultiCell
+        $pdf->MultiCell($w[0], $height, $row['tindakan'], 1, 'L');
+
+        // Cetak kolom-kolom nilai
+        $pdf->SetXY($startX + $w[0], $yPos);
         $pdf->Cell($w[1], $height, 'Rp. ' . number_format($row['harga']), 1, 0, 'L');
         $pdf->Cell($w[2], $height, empty($row['diskon']) ? '0%' : $row['diskon'] . '%', 1, 0, 'R');
-        $pdf->Cell($w[3], $height, 'Rp. ' . number_format($row['total']), 1, 0, 'L');
-        $pdf->Ln($height);
+        $pdf->Cell($w[3], $height, empty($row['diskon_jm']) ? '0%' : $row['diskon_jm'] . '%', 1, 0, 'R');
+
+        // Cetak catatan dengan MultiCell
+        $pdf->SetXY($startX + $w[0] + $w[1] + $w[2] + $w[3], $yPos);
+        $pdf->MultiCell($w[4], $height, $row['catatan'], 1, 'L');
+
+        // Cetak total
+        $pdf->SetXY($startX + $w[0] + $w[1] + $w[2] + $w[3] + $w[4], $yPos);
+        $pdf->Cell($w[5], $height, 'Rp. ' . number_format($row['total']), 1, 0, 'L');
+
+        // Pindah ke baris berikutnya
+        $pdf->SetY($yPos + $height);
     }
 
     // Sebelum output PDF, hitung total
@@ -114,8 +147,8 @@ if (isset($_GET['notrans'])) {
 
     // Tampilkan total
     $pdf->SetFont('helvetica', 'B', 10);
-    $pdf->Cell(array_sum($w) - 45, 7, 'GRAND TOTAL', 1, 0, 'C');
-    $pdf->Cell(45, 7, 'Rp. ' . number_format($total), 1, 1, 'L');
+    $pdf->Cell(array_sum($w) - 27, 7, 'GRAND TOTAL', 1, 0, 'C');
+    $pdf->Cell(27, 7, 'Rp. ' . number_format($total), 1, 1, 'L');
 
     // TTD
     $pdf->Ln(18);

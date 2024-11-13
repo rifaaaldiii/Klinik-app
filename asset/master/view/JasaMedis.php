@@ -21,7 +21,7 @@
                         <th>Dokter</th>
                         <th>Tindakan</th>
                         <th>Jasa Medis</th>
-                        <th>Diskon</th>
+                        <th>Diskon JM</th>
                         <th>Modal</th>
                         <th>DP</th>
                         <th>Tools</th>
@@ -35,7 +35,7 @@
                     k.nama,
                     GROUP_CONCAT(DISTINCT t.notrans) as notrans,
                     SUM(dt.jm) as total_jm,
-                    SUM(dt.diskon) as total_diskon,
+                    SUM(dt.diskon_jm) as total_diskon,
                     SUM(dt.harga) as total_harga,
                     SUM(dt.modal) as total_modal,
                     SUM(dt.dp) as total_dp

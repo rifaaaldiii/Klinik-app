@@ -205,9 +205,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="row">
-                                                    <img src="img/qr-code/<?= $penggajian_row['nik'] ?>.png" alt="" style="width: 80%; margin: auto; padding: 0;">
-                                                </div>
+
 
                                                 <div class="modal-footer">
                                                     <div class="col-md-12 d-flex justify-content-end">

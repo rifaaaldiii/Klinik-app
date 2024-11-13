@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 11, 2024 at 03:34 PM
+-- Generation Time: Nov 13, 2024 at 04:22 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -74,6 +74,7 @@ CREATE TABLE `detail_transaksi` (
   `bayar` varchar(255) NOT NULL,
   `total` varchar(45) NOT NULL,
   `diskon` varchar(45) NOT NULL,
+  `diskon_jm` varchar(11) NOT NULL,
   `metode` varchar(20) NOT NULL,
   `catatan` varchar(225) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -125,15 +126,6 @@ CREATE TABLE `karyawan` (
   `golongan_id` int(11) UNSIGNED NOT NULL,
   `status` varchar(11) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `karyawan`
---
-
-INSERT INTO `karyawan` (`id`, `nip`, `nik`, `nama`, `jenis_kelamin`, `tanggal_lahir`, `telpon`, `no_rek`, `agama`, `alamat`, `golongan_id`, `status`) VALUES
-(26, '234324', '32432423', 'Rifaldi', 'Laki-laki', '2024-11-11', '083432423', '23438249324', 'Islam', 'PDG', 7, ''),
-(27, '34324', '34324', 'Messy', 'Perempuan', '2024-11-11', '04353453', '21321', 'Islam', 'LBK', 9, 'on'),
-(28, '324324', '3423423', 'Azi', 'Laki-laki', '2024-11-11', '345534543', '3242352', 'Islam', 'PDG', 1, 'on');
 
 -- --------------------------------------------------------
 
@@ -297,7 +289,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `username`, `email`, `password`, `role`) VALUES
 (1, 'owner', 'rifaldiyuda@gmail.com', '$2y$10$08zptNTIPDbCxD1Vau9Kg.FNEZJku1FGypouCpITAAnC5ukwfTqG6', 'owner'),
-(4, 'admin', 'admin@gmail.com', '$2y$10$HPg0Ck7oZsL2VKagB1PDQ.T4y5UPcLttbHezq6o5AbuBJn3RIjheS', 'admin');
+(4, 'admin', 'admin@gmail.com', '$2y$10$GImH.YwBxXiaI.P/0drHe.g1AZQr/d90esIl/wA1IJCGa91oy0wt2', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -372,19 +364,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `asistens`
 --
 ALTER TABLE `asistens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `detail_gaji`
 --
 ALTER TABLE `detail_gaji`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `detail_transaksi`
 --
 ALTER TABLE `detail_transaksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=178;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=183;
 
 --
 -- AUTO_INCREMENT for table `golongan`
@@ -396,13 +388,13 @@ ALTER TABLE `golongan`
 -- AUTO_INCREMENT for table `karyawan`
 --
 ALTER TABLE `karyawan`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `penggajian`
 --
 ALTER TABLE `penggajian`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `tindakan`
@@ -414,7 +406,7 @@ ALTER TABLE `tindakan`
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=170;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=174;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -436,7 +428,7 @@ ALTER TABLE `asistens`
 -- Constraints for table `detail_gaji`
 --
 ALTER TABLE `detail_gaji`
-  ADD CONSTRAINT `detail_gaji_ibfk_1` FOREIGN KEY (`penggajian_id`) REFERENCES `penggajian` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `detail_gaji_ibfk_1` FOREIGN KEY (`penggajian_id`) REFERENCES `penggajian` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `detail_gaji_ibfk_2` FOREIGN KEY (`karyawan_id`) REFERENCES `karyawan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
