@@ -12,13 +12,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $subtotal = $_POST['subtotal'];
     $tipe = $_POST['jm'];
     $diskon = $_POST['diskon'];
+    $diskon_jm = $_POST['diskon_jm'];
     $dp = $_POST['dp'];
     $catatan = $_POST['catatan'];
+
 
     // Validasi subtotal
 
     // Query untuk memasukkan data ke tabel detail_transaksi
-    $query = "INSERT INTO detail_transaksi (id, notrans, tindakan, harga, jm, tipe_jm, modal, total, diskon, dp, catatan) VALUES (NULL, '$notrans', '$nama_td', '$harga', '$harga_jasa', '$tipe', '$modal', '$subtotal', '$diskon', '$dp', '$catatan')";
+    $query = "INSERT INTO detail_transaksi (id, notrans, tindakan, harga, jm, tipe_jm, modal, total, diskon, diskon_jm, dp, catatan) VALUES (NULL, '$notrans', '$nama_td', '$harga', '$harga_jasa', '$tipe', '$modal', '$subtotal', '$diskon', '$diskon_jm', '$dp', '$catatan')";
     mysqli_query($conn, $query);
     // Menambahkan alert sebelum redirect
     echo "<script>alert('Tindakan berhasil di input');</script>";

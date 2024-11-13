@@ -19,10 +19,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    $query = "UPDATE detail_transaksi SET metode = '$metode_pembayaran', bayar = '$bayar' WHERE notrans = '$notrans'";
+    $query = "UPDATE detail_transaksi SET metode = '$metode_pembayaran' WHERE notrans = '$notrans'";
     mysqli_query($conn, $query);
 
-    $query_detail = "UPDATE transaksi SET status = 'off', total = '$total', catatan = '$catatan' WHERE notrans = '$notrans'";
+    $query_detail = "UPDATE transaksi SET status = 'off', total = '$bayar', catatan = '$catatan' WHERE notrans = '$notrans'";
     mysqli_query($conn, $query_detail);
 
     echo "<script>alert('Transaksi berhasil di input');</script>";

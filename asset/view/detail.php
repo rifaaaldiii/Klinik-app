@@ -192,6 +192,7 @@
                     <th>Jasa Medis</th>
                     <th>Modal</th>
                     <th>Diskon</th>
+                    <th>Diskon JM</th>
                     <th>DP</th>
                     <th>Total</th>
                     <th>Tools</th>
@@ -214,6 +215,7 @@
                             <td>Rp. <?= empty($detail_row['jm']) ? 0 : number_format($detail_row['jm'], 0, ',', '.') ?></td>
                             <td>Rp. <?= empty($detail_row['modal']) ? 0 : number_format($detail_row['modal'], 0, ',', '.') ?></td>
                             <td><?= empty($detail_row['diskon']) ? 0 : $detail_row['diskon'] ?>%</td>
+                            <td><?= empty($detail_row['diskon_jm']) ? 0 : $detail_row['diskon_jm'] ?>%</td>
                             <td>Rp. <?= empty($detail_row['dp']) ? 0 : number_format($detail_row['dp'], 0, ',', '.') ?></td>
                             <td>Rp. <?= empty($detail_row['total']) ? 0 : number_format($detail_row['total'], 0, ',', '.') ?></td>
                             <td>
